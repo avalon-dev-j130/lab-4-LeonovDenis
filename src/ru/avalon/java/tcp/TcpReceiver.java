@@ -1,12 +1,15 @@
 package ru.avalon.java.tcp;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- * Упражнение на выаботку умений связанных с получением сообщений,
- * отправленных с использованием протокола TCP.
+ * Упражнение на выаботку умений связанных с получением сообщений, отправленных
+ * с использованием протокола TCP.
  *
  * @author Daniel Alpatov
  */
@@ -14,7 +17,7 @@ public final class TcpReceiver {
 
     public static void main(String[] args) throws IOException {
         // 1. Определяем порт, на котором ожидается соединение.
-        final int port = 0;
+        final int port = 10001;
         // 2. Подготавливаем серверный сокет.
         final ServerSocket listener = prepareServerSocket(port);
         // 3. Принимаем соединение.
@@ -28,24 +31,29 @@ public final class TcpReceiver {
     }
 
     /**
-     * Возвращает серверный сокет, связанный с портом, описанным
-     * параметром {@code port}.
+     * Возвращает серверный сокет, связанный с портом, описанным параметром
+     * {@code port}.
      *
-     * @param port порт, на котором предполагается получать входящие
-     *             соединения.
+     * @param port порт, на котором предполагается получать входящие соединения.
      *
      * @return серверный сокет, связанный с портом {@code port}.
      */
     private static ServerSocket prepareServerSocket(int port) {
+
         /*
-         * TODO Реализовать метод prepareServerSocket класса TcpReceiver
+            * TODO Реализовать метод prepareServerSocket класса TcpReceiver
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        ServerSocket ss = null;
+        try {
+            ss = new ServerSocket(port);
+        } catch (IOException ex) {
+            System.out.println("Ошибка создания Сервер Сокета " + ex.getMessage());
+        }
+        return ss;
     }
 
     /**
-     * Возвращает сообщение, прочитанное из входящего потока,
-     * указанного сокета.
+     * Возвращает сообщение, прочитанное из входящего потока, указанного сокета.
      *
      * @param socket сокет, описывающий сетевое соединение.
      *
@@ -55,7 +63,17 @@ public final class TcpReceiver {
         /*
          * TODO Реализовать метод receive класса TcpReceiver
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        String massage = "";
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+            StringBuilder buidMassage = new StringBuilder();
+            while (br.ready()) {
+                buidMassage.append(br.readLine());
+            }
+            massage = buidMassage.toString();
+        } catch (IOException ex) {
+            System.out.println("Ошибка чтения из потока " + ex.getMessage());
+        }
+        return massage;
     }
 
 }

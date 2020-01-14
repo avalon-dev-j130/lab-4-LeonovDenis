@@ -1,12 +1,14 @@
 package ru.avalon.java.tcp;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
 
 /**
- * Упражнение на выработку базовых умений использования
- * протокола TCP.
+ * Упражнение на выработку базовых умений использования протокола TCP.
  *
  * @author Daniel Alpatov
  */
@@ -34,7 +36,7 @@ public final class TcpSender {
         /*
          * TODO Реализовать метод prepareMessage класса TcpSender
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        return "TCP massage for TCP receiver: \"Hello World!\"\n";
     }
 
     /**
@@ -46,7 +48,7 @@ public final class TcpSender {
         /*
          * TODO Реализовать метод prepareAddress класса TcpSender
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        return new InetSocketAddress("localhost", 10001);
     }
 
     /**
@@ -63,7 +65,9 @@ public final class TcpSender {
         /*
          * TODO Реализовать метод connect класса TcpSender
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        Socket socket = new Socket();
+        socket.connect(address);
+        return socket;
     }
 
     /**
@@ -78,7 +82,9 @@ public final class TcpSender {
         /*
          * TODO Реализовать метод send класса TcpSender
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()))) {
+            bw.write(message);
+        }
     }
 
 }
