@@ -2,7 +2,6 @@ package ru.avalon.java.tcp;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -43,13 +42,13 @@ public final class TcpReceiver {
         /*
             * TODO Реализовать метод prepareServerSocket класса TcpReceiver
          */
-        ServerSocket ss = null;
+        ServerSocket serverSocket = null;
         try {
-            ss = new ServerSocket(port);
+            serverSocket = new ServerSocket(port);
         } catch (IOException ex) {
             System.out.println("Ошибка создания Сервер Сокета " + ex.getMessage());
         }
-        return ss;
+        return serverSocket;
     }
 
     /**
